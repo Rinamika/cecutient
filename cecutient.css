@@ -1,0 +1,182 @@
+.hide-on-normal {
+	display: none!important;
+}
+
+.hidden {
+	display: none !important;
+}
+
+body.cecutient .hide-on-normal {
+	display: block !important;
+}
+
+/* Cecutient panel */
+
+#cecutient {
+	position: fixed;
+	top: 0;
+	right: 25px;
+	width: 64px;
+	height: 64px;
+	background: url(img/cecutient64.png) no-repeat center center;
+}
+
+#cecutientPanel {
+	position: relative;
+	width: 980px;
+	height: 85px;
+	margin:0 auto;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	background: #dadada;
+	font-family: Arial;
+	font-size: 12px!important;
+	padding: 7px 15px 0;
+}
+
+#cecutientPanel > * {
+	font-size: 12px!important;
+}
+
+#cecutientPanel > div {
+	display: inline-block;
+	margin-left: 32px;
+	float: left;
+}
+
+#cecutientPanel > div > div {
+	display: inline-block;
+	margin: 0;
+	margin-top: 12px;
+	margin-left: 15px;
+	float: left;
+}
+
+#cecutientPanel > div > div:first-child {
+	margin-top: 22px;
+	margin-left: 0;
+}
+
+#cecutientPanel > div > div a {
+	width: 38px;
+	height: 38px;
+	border: 1px solid #999999;
+	text-decoration: none;
+	display: inline-block;
+	box-sizing: border-box;
+	background: #ffffff;
+	color: #000000;
+	padding-top: 16px;
+	float: left;
+	-moz-box-sizing: border-box;
+}
+
+#cecutientPanel > div > div #increaseFontSize span {
+	line-height: 6px;
+}
+
+#cecutientPanel > div > div a span {
+	font-size: 38px;
+	line-height: 0px;
+	height: 100%;
+	text-align: center;
+	width: 100%;
+	display: block;
+	-moz-box-sizing: border-box;
+}
+
+#cecutientPanel > div > div a:hover {
+	background: #c9c9c9;
+}
+
+#cecutientPanel > div > div a:first-child {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+#cecutientPanel > div > div a:last-child {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+/* Colors on panel */
+
+#cecutientPanel > div > div #colorWhite {
+	background: #ffffff;
+}
+
+#cecutientPanel > div > div #colorBlack {
+	background: #000000;
+}
+
+#cecutientPanel > div > div #colorBlue {
+	background: #4896ff;
+}
+
+/* Images on/off */
+
+#cecutientPanel .settingImages > div a {
+	width: 60px;
+}
+
+#cecutientPanel .settingImages > div a span {
+	font-size: 18px;
+	line-height: 6px;
+}
+
+#cecutientPanel .settingImages > div a.current {
+	background: #000000;
+	color: #ffffff !important;
+	pointer-events: none;
+	cursor: default;
+}
+
+.cecutientImagesOn {
+	display: inline !important;
+}
+
+body.cecutient {
+	background: white;
+}
+
+body.cecutient .hide-on-cecutient {
+	display: none!important;
+}
+
+body.cecutient #layout {
+	background: none;
+}
+
+body.colorBlack {
+	background: black !important;
+}
+
+body.colorBlack #layout article {
+	color: white !important;
+	background: black !important;
+}
+
+body.colorBlack #layout article a {
+	color: white !important;
+}
+
+body.colorBlue {
+	background: #4896ff !important;
+}
+
+
+body.colorBlue #layout article {
+	color: #063462 !important;
+	background: #4896ff !important;
+}
+
+body.colorBlue #layout article a {
+	color: #063462 !important;
+}
+
+
+body.colorWhite #layout article {
+	color: black;
+	background: white;
+}
