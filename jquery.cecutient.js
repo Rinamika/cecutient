@@ -1,5 +1,45 @@
 (function ($) {
-	var savedIncrement = (getCookie('font-size') === undefined || getCookie('font-size') == '') ? 0 : getCookie('font-size');
+	var savedIncrement = (getCookie('cecutient_font-size') === undefined || getCookie('cecutient_font-size') == '') ? 0 : getCookie('cecutient_font-size');
+
+	function getCookie(name) {
+		var matches = document.cookie.match(new RegExp(
+			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		));
+		return matches ? decodeURIComponent(matches[1]) : undefined;
+	}
+
+	function setCookie(name, value, options) {
+		options = options || {};
+
+		var expires = options.expires;
+
+		if (typeof expires == "number" && expires) {
+			var d = new Date();
+			d.setTime(d.getTime() + expires * 1000);
+			expires = options.expires = d;
+		}
+		if (expires && expires.toUTCString) {
+			options.expires = expires.toUTCString();
+		}
+
+		value = encodeURIComponent(value);
+
+
+		var updatedCookie = name + "=" + value + "; path=/";
+
+		for (var propName in options) {
+			updatedCookie += "; " + propName;
+			var propValue = options[propName];
+			if (propValue !== true) {
+				updatedCookie += "=" + propValue;
+			}
+		}
+		document.cookie = updatedCookie;
+	}
+
+	function deleteCookie(name) {
+		setCookie(name, "", { expires: -1 })
+	}
 
 	$.fn.zoomtext = function (c) {
 		var a = {
@@ -23,9 +63,7 @@
 			} else if (a.increment.indexOf("-=") != -1) {
 				savedIncrement = parseInt(savedIncrement) - parseInt(a.increment.substr(2, a.increment.length - 1));
 			}
-			setCookie('font-size', savedIncrement);
-			console.log("saved: " + savedIncrement);
-			console.log(getCookie('font-size') + " COOKIE");
+			setCookie('cecutient_font-size', savedIncrement);
 		}
 		return c.each(function (c, d) {
 			var b = $(this).css("fontSize"),
@@ -37,7 +75,6 @@
 			a.max && parseFloat(b) > a.max && (b = a.max);
 			a.min && parseFloat(b) < a.min && (b = a.min);
 			if (a.recovery) {
-				console.log("recovery size");
 				$(this).removeAttr('style');
 			} else {
 				$(this).css({
@@ -45,7 +82,6 @@
 					lineHeight: parseFloat(b) + "px"
 				});
 			}
-			console.log(b);
 		});
 	};
 
@@ -62,20 +98,21 @@
 			body = $("body");
 
 		function cecutientOn() {
+			console.log("Cecutient mode on");
 			setCookie('cecutient', 1);
 			$('body').addClass('cecutient');
 			$("#cecutientPanel").removeClass("hidden");
-			if (getCookie('hide-images') == 1) {
+			if (getCookie('cecutient_hide-images') == 1) {
 				cecutientImagesOff();
 			} else {
 				cecutientImagesOn();
 			}
-			if (getCookie('color-scheme') !== undefined) {
+			if (getCookie('cecutient_color-scheme') !== undefined) {
 				setColorScheme(getCookie('color-scheme'));
 			}
-			if (getCookie('font-size') !== undefined && getCookie('font-size') !== '') {
+			if (getCookie('cecutient_font-size') !== undefined && getCookie('cecutient_font-size') !== '') {
 				$(options.target).zoomtext({
-					increment: "+=" + getCookie('font-size'),
+					increment: "+=" + getCookie('cecutient_font-size'),
 					min: options.minimumFontSize});
 			} else {
 				$(options.target).zoomtext({
@@ -86,24 +123,24 @@
 		}
 
 		function cecutientOff() {
-			console.log("off");
+			console.log("Cecutient mode off");
 			deleteCookie('cecutient');
 			$("#cecutientPanel").addClass("hidden");
 			body.removeClass('cecutient colorWhite colorBlack colorBlue');
 			$('img').removeClass('hidden');
 			body.zoomtext({recovery: 1});
-			deleteCookie('font-size');
+			deleteCookie('cecutient_font-size');
 		}
 
 		function cecutientImagesOn() {
-			deleteCookie('hide-images');
+			deleteCookie('cecutient_hide-images');
 			$('#switchOnImages').addClass('current');
 			$('#switchOffImages').removeClass('current');
 			$('img').removeClass('hidden');
 		}
 
 		function cecutientImagesOff() {
-			setCookie('hide-images', 1);
+			setCookie('cecutient_hide-images', 1);
 			$('#switchOnImages').removeClass('current');
 			$('#switchOffImages').addClass('current');
 			$('img:not(' + options.imageClass + ')').addClass('hidden');
@@ -111,7 +148,7 @@
 
 		function setColorScheme(color) {
 			body.removeClass("colorWhite colorBlack colorBlue").addClass(color);
-			setCookie('color-scheme', color);
+			setCookie('cecutient_color-scheme', color);
 		}
 
 		context.unbind("click").bind("click", function () {

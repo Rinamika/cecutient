@@ -14,8 +14,8 @@ Put the following in head section:
 ```javascript
 <script src="/path/to/jquery.js"></script>
 <script src="/path/to/utils.js"></script>
-<script src="/path/to/cecutient.js"></script>
-<link rel="stylesheet" href="path/to/cecutient.css"/>
+<script src="/path/to/jquery.cecutient.js"></script>
+<link rel="stylesheet" href="path/to/jquery.cecutient.css"/>
 
 <script type="text/javascript">
 	jQuery(function($) {
@@ -59,11 +59,6 @@ By default, here are three color schemes: white, black and blue. You can specify
 ###One more..
 
 ~~Only today and just for 0.99$..~~
-
-As you can see, 'cecutient' uses some functions from `utils.js` for manipulating with cookies.
-
-Also, here is zoomtext function for manipulating with fonts.
-
 
 Feel free to use and contribute :)
 
