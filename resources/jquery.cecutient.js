@@ -163,7 +163,7 @@
 		});
 
 		//Load cecutient panel in specified container
-		$(options.container).load("../resources/templates/panel_" + options.language + ".html", function() {
+		$(options.container).load("/resources/templates/panel_" + options.language + ".html", function() {
 			$('.settingColor a').unbind("click").bind("click", function () {
 				var color = $(this).attr("id");
 				setColorScheme(color);
