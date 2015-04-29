@@ -50,13 +50,11 @@
 			skip: !1,  //skip all children of element, css children's selector is "*"
 			setCookie: !1
 		}, a = $.extend(a, c);
-		c = $("*", this).add(this);
+		c = $("*", this).not($(a.skip)).not($(a.skip + " > *"));
 		c.each(function (a, c) {
 			var b = $(this).css("fontSize");
 			!$(this).data("fontSize") && $(this).data("fontSize", b).css("fontSize", b);
-
 		});
-		a.skip && (c = c.not($(a.skip, this)));
 		if (a.setCookie) {
 			if (a.increment.indexOf("+=") != -1) {
 				savedIncrement = parseInt(savedIncrement) + parseInt(a.increment.substr(2, a.increment.length - 1));
@@ -88,11 +86,14 @@
 
 	$.fn.cecutient = function (options) {
 		options = options || {};
-		options.target = $(options.target || '#layout');
+		options.target = options.target || '#layout';
 		options.imageClass = options.imageClass || '.cecutientImagesOn';
 		options.minimumFontSize = options.minimumFontSize || 12;
 		options.maximumFontSize = options.maximumFontSize || 26;
 		options.increment = options.increment || 3;
+		options.skipForFont = options.skipForFont || '.skipForFont';
+		options.container = options.container || "#panelWrapper";
+		options.language = options.language || "en";
 
 		var context = $(this),
 			body = $("body");
@@ -111,14 +112,16 @@
 				setColorScheme(getCookie('color-scheme'));
 			}
 			if (getCookie('cecutient_font-size') !== undefined && getCookie('cecutient_font-size') !== '') {
-				$(options.target).zoomtext({
+				$(options.target+ ":not('" + options.skipForFont + "')").zoomtext({
 					increment: "+=" + getCookie('cecutient_font-size'),
-					min: options.minimumFontSize});
+					min: options.minimumFontSize,
+					skip: options.skipForFont});
 			} else {
 				$(options.target).zoomtext({
 					increment: "+=0",
 					min: options.minimumFontSize,
-					setCookie: 1});
+					setCookie: 1,
+					skip: options.skipForFont});
 			}
 		}
 
@@ -159,25 +162,28 @@
 			cecutientOff();
 		});
 
-		$('.settingColor a').unbind("click").bind("click", function () {
-			var color = $(this).attr("id");
-			setColorScheme(color);
-		});
+		//Load cecutient panel in specified container
+		$(options.container).load("../resources/templates/panel_" + options.language + ".html", function() {
+			$('.settingColor a').unbind("click").bind("click", function () {
+				var color = $(this).attr("id");
+				setColorScheme(color);
+			});
 
-		$("#switchOnImages").unbind("click").bind("click", function () {
-			cecutientImagesOn();
-		});
+			$("#switchOnImages").unbind("click").bind("click", function () {
+				cecutientImagesOn();
+			});
 
-		$("#switchOffImages").unbind("click").bind("click", function () {
-			cecutientImagesOff();
-		});
+			$("#switchOffImages").unbind("click").bind("click", function () {
+				cecutientImagesOff();
+			});
 
-		$('#reduceFontSize').unbind("click").bind("click", function () {
-			$('#layout article').zoomtext({increment: "-=" + options.increment, setCookie: 1});
-		});
+			$('#reduceFontSize').unbind("click").bind("click", function () {
+				$(options.target).zoomtext({increment: "-=" + options.increment, setCookie: 1, skip: options.skipForFont});
+			});
 
-		$('#increaseFontSize').unbind("click").bind("click", function () {
-			$('#layout article').zoomtext({increment: "+=" + options.increment, setCookie: 1});
+			$('#increaseFontSize').unbind("click").bind("click", function () {
+				$(options.target).zoomtext({increment: "+=" + options.increment, setCookie: 1, skip: options.skipForFont});
+			});
 		});
 
 		//check if cecutient version is enabled in cookie

@@ -24,7 +24,10 @@ Put the following in head section:
 			target: "#layout article",
 			imageClass: ".cecutientImagesOn",
 			minimumFontSize : 16,
-			maximumFontSize : 20
+			maximumFontSize : 20,
+			skipForFont: ".skip",
+			container: "#panelWrapper",
+			language: 'en'
 		});
 	});
 </script>
@@ -43,6 +46,8 @@ In repository you can find `panel_en.htm` and `panel_ru.htm` - English and Russi
 </div>
 ```
 
+Panel in loaded in `container` that you specified.
+
 By default, here are three color schemes: white, black and blue. You can specify your owns by adding links to panel and css in `cecutient.css`, or modify existing.
 
 ###Options
@@ -55,6 +60,9 @@ By default, here are three color schemes: white, black and blue. You can specify
 | imageClass | Class for images that are always visible  | ".cecutientImagesOn" |
 | minimumFontSize | Minimum font size when cecutient is enabled |  12 |
 | maximumFontSize | Maximum font size when cecutien is enabled  | 26 |
+| skipForFont | Don't change font-size for specified container and its children  | .skipForFont |
+| container | Container for cecutient panel  | #panelWrapper |
+| language | Language of panel ('en' or 'ru')  | 'en' |
 
 ###One more..
 

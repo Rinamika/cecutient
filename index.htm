@@ -27,9 +27,8 @@
 	</style>
 
 	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-	<script src="utils.js"></script>
-	<script src="cecutient.js"></script>
-	<link rel="stylesheet" href="cecutient.css"/>
+	<script src="resources/jquery.cecutient.js"></script>
+	<link rel="stylesheet" href="resources/jquery.cecutient.css"/>
 
 
 	<script type="text/javascript">
@@ -39,7 +38,10 @@
 				target: "#layout article",
 				imageClass: ".cecutientImagesOn",
 				minimumFontSize : 16,
-				maximumFontSize : 20
+				maximumFontSize : 20,
+				skipForFont: ".skip",
+				container: "#panelWrapper",
+				language: 'en'
 			});
 		});
 	</script>
@@ -50,11 +52,7 @@
 	<div id="layout">
 	<a id="cecutient" href="#"></a>
 
-	<div id="cecutientPanel" class="hide-on-normal">
-		<div class="settingFontSize"><div>Font size</div><div><a id="reduceFontSize" href="#"><span>-</span></a><a id="increaseFontSize" href="#"><span>+</span></a></div></div>
-		<div class="settingColor"><div>Color scheme</div><div><a id="colorWhite" href="#"></a><a id="colorBlack" href="#"></a><a id="colorBlue" href="#"></a></div></div>
-		<div class="settingImages"><div>Images</div><div><a class="" id="switchOnImages" href="#"><span>On</span></a><a class="current" id="switchOffImages" href="#"><span>Off</span></a></div></div>
-	</div>
+	<div id="panelWrapper"></div>
 
 	<article>
 		<h1>H1 title</h1>
@@ -86,6 +84,13 @@
 			Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat,
 			leo eget bibendum sodales, augue velit cursus nunc,</p>
 		<img src="img/image4.jpg" alt="" class="hide-on-normal"/>
+
+		<div class="skip">
+			<p>
+				Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus
+				viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
+			</p>
+		</div>
 	</article>
 </div>
 </body>
