@@ -93,6 +93,7 @@
 		options.increment = options.increment || 3;
 		options.skipForFont = options.skipForFont || '.skipForFont';
 		options.container = options.container || "#panelWrapper";
+		options.containerPath = options.containerPath || "resources/templates";
 		options.language = options.language || "en";
 
 		var context = $(this),
@@ -163,7 +164,7 @@
 		});
 
 		//Load cecutient panel in specified container
-		$(options.container).load("resources/templates/panel_" + options.language + ".html", function() {
+		$(options.container).load(options.containerPath +"/panel_" + options.language + ".html", function() {
 			$('.settingColor a').unbind("click").bind("click", function () {
 				var color = $(this).attr("id");
 				setColorScheme(color);

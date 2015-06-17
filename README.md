@@ -27,6 +27,7 @@ Put the following in head section:
 			maximumFontSize : 20,
 			skipForFont: ".skip",
 			container: "#panelWrapper",
+			containerPath: "resources/templates",
 			language: 'en'
 		});
 	});
@@ -62,6 +63,7 @@ By default, here are three color schemes: white, black and blue. You can specify
 | maximumFontSize | Maximum font size when cecutien is enabled  | 26 |
 | skipForFont | Don't change font-size for specified container and its children  | .skipForFont |
 | container | Container for cecutient panel  | #panelWrapper |
+| containerPath | Path to directory with cecutient panel *.html file  | "resources/templates" |
 | language | Language of panel ('en' or 'ru')  | 'en' |
 
 ###One more..
