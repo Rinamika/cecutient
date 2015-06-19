@@ -41,48 +41,54 @@
 		setCookie(name, "", { expires: -1 })
 	}
 
-	$.fn.zoomtext = function (c) {
-		var a = {
-			min: 12, //minimal font size; 0 - no limitations
-			max: 26, //maximum font size; 0 - no limitations
-			increment: "+=1", //increment or font-size, e.g. "24px"
-			recovery: !1, // disable all font-size changes
-			skip: !1,  //skip all children of element, css children's selector is "*"
-			setCookie: !1
-		}, a = $.extend(a, c);
-		c = $("*", this).not($(a.skip)).not($(a.skip + " > *"));
-		c.each(function (a, c) {
-			var b = $(this).css("fontSize");
-			!$(this).data("fontSize") && $(this).data("fontSize", b).css("fontSize", b);
-		});
-		if (a.setCookie) {
-			if (a.increment.indexOf("+=") != -1) {
-				savedIncrement = parseInt(savedIncrement) + parseInt(a.increment.substr(2, a.increment.length - 1));
-			} else if (a.increment.indexOf("-=") != -1) {
-				savedIncrement = parseInt(savedIncrement) - parseInt(a.increment.substr(2, a.increment.length - 1));
+
+	$.fn.zoomtext = function (options) {
+		options = options || {};
+		options.min = options.min || 12;
+		options.max = options.max || 26;
+		options.increment = options.increment || "+=1";
+		options.recovery = options.recovery || !1;
+		options.skip = options.skip || !1;
+		options.setCookie = options.setCookie || !1;
+
+		var $element = $(this);
+
+		$element = $("*", $element).not($(options.skip)).not($(options.skip + " *"));
+
+/*		if (options.setCookie) {
+			if (options.increment.indexOf("+=") != -1) {
+				savedIncrement = parseInt(savedIncrement) + parseInt(options.increment.substr(2, options.increment.length - 1));
+			} else if (options.increment.indexOf("-=") != -1) {
+				savedIncrement = parseInt(savedIncrement) - parseInt(options.increment.substr(2, options.increment.length - 1));
 			}
 			setCookie('cecutient_font-size', savedIncrement);
-		}
-		return c.each(function (c, d) {
-			var b = $(this).css("fontSize"),
-				b = $("<div/>", {
-					css: {
-						fontSize: b
-					}
-				}).css("fontSize", a.increment).css("fontSize");
-			a.max && parseFloat(b) > a.max && (b = a.max);
-			a.min && parseFloat(b) < a.min && (b = a.min);
-			if (a.recovery) {
-				$(this).removeAttr('style');
+		}*/
+		return $element.each(function() {
+			var currentFSize, newFSize;
+
+			if (options.recovery) {
+				$(this).removeAttribute('style');
 			} else {
+				currentFSize = newFSize =
+					$("<div/>", {
+						css: {
+							fontSize: $(this).css("fontSize")
+						}
+					}).css("fontSize", options.increment).css("fontSize");
+
+				if (parseFloat(currentFSize) > options.max) {
+					newFSize = options.max;
+				}
+				if (parseFloat(currentFSize) < options.min) {
+					newFSize = options.min;
+				}
 				$(this).css({
-					fontSize: b,
-					lineHeight: parseFloat(b) + "px"
-				});
+					fontSize: newFSize,
+					lineHeight: parseFloat(newFSize) + 'px'
+				})
 			}
 		});
 	};
-
 
 	$.fn.cecutient = function (options) {
 		options = options || {};
@@ -116,11 +122,13 @@
 				$(options.target+ ":not('" + options.skipForFont + "')").zoomtext({
 					increment: "+=" + getCookie('cecutient_font-size'),
 					min: options.minimumFontSize,
+					max: options.maximumFontSize,
 					skip: options.skipForFont});
 			} else {
 				$(options.target).zoomtext({
 					increment: "+=0",
 					min: options.minimumFontSize,
+					max: options.maximumFontSize,
 					setCookie: 1,
 					skip: options.skipForFont});
 			}
@@ -179,11 +187,11 @@
 			});
 
 			$('#reduceFontSize').unbind("click").bind("click", function () {
-				$(options.target).zoomtext({increment: "-=" + options.increment, setCookie: 1, skip: options.skipForFont});
+				$(options.target).zoomtext({increment: "-=" + options.increment, setCookie: 1, skip: options.skipForFont, min: options.minimumFontSize});
 			});
 
 			$('#increaseFontSize').unbind("click").bind("click", function () {
-				$(options.target).zoomtext({increment: "+=" + options.increment, setCookie: 1, skip: options.skipForFont});
+				$(options.target).zoomtext({increment: "+=" + options.increment, setCookie: 1, skip: options.skipForFont, max: options.maximumFontSize});
 			});
 		});
 
