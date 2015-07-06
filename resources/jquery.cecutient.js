@@ -67,7 +67,7 @@
 			var currentFSize, newFSize;
 
 			if (options.recovery) {
-				$(this).removeAttribute('style');
+				$(this).removeAttr('style');
 			} else {
 				currentFSize = newFSize =
 					$("<div/>", {
