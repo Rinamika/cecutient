@@ -22,6 +22,7 @@
 			options.expires = expires.toUTCString();
 		}
 
+		name = encodeURIComponent(name)
 		value = encodeURIComponent(value);
 
 
