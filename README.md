@@ -1,13 +1,13 @@
 # cecutient
 A quick way to customize website for the convenience of visually impaired people.
 
-##Internet is for everybody.
+## Internet is for everybody.
 ------
 There are a lot of people with poor eyesight, who feel uncomfortable while surfing Internet.
 
 We produce "Cecutient" - a simple tool that provides a panel for manipulating with font size, color schemes and enabling of images.
 
-###Installation
+### Installation
 ------
 Put the following in head section:
 
@@ -20,13 +20,14 @@ Put the following in head section:
 <script type="text/javascript">
 	jQuery(function($) {
 		$('#cecutient').cecutient({
-			increment: 3,
+			increment: 1,
 			target: "#layout article",
 			imageClass: ".cecutientImagesOn",
-			minimumFontSize : 16,
-			maximumFontSize : 20,
+			minimumFontSize : 0,
+			maximumFontSize : 10,
 			skipForFont: ".skip",
 			container: "#panelWrapper",
+			containerPath: "resources/templates",
 			language: 'en'
 		});
 	});
@@ -50,7 +51,7 @@ Panel in loaded in `container` that you specified.
 
 By default, here are three color schemes: white, black and blue. You can specify your owns by adding links to panel and css in `cecutient.css`, or modify existing.
 
-###Options
+### Options
 ------
 
 | Name | Description | Default value |
@@ -58,13 +59,14 @@ By default, here are three color schemes: white, black and blue. You can specify
 | increment      | A step for inc/dec font-size | 3 |
 | target     | Element, where all magic happens  |  layout |
 | imageClass | Class for images that are always visible  | ".cecutientImagesOn" |
-| minimumFontSize | Minimum font size when cecutient is enabled |  12 |
-| maximumFontSize | Maximum font size when cecutien is enabled  | 26 |
+| minimumFontSize | Minimum increment for font when cecutient is enabled |  0 |
+| maximumFontSize | Maximum increment for font when cecutien is enabled  | 10 |
 | skipForFont | Don't change font-size for specified container and its children  | .skipForFont |
 | container | Container for cecutient panel  | #panelWrapper |
+| containerPath | Path to directory with cecutient panel *.html file  | "resources/templates" |
 | language | Language of panel ('en' or 'ru')  | 'en' |
 
-###One more..
+### One more..
 
 ~~Only today and just for 0.99$..~~
 

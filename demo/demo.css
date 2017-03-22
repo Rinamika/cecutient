@@ -1,0 +1,153 @@
+body{
+	background: rgba(236, 236, 236, 1);
+	font-family: 'PT Sans', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.show-settings, .hide-settings {
+	display: none;
+	position: fixed;
+	top: 70px;
+	right: 25px;
+	width: 64px;
+	height: 64px;
+	background: url(../img/settings.png) no-repeat center center;
+	background-size: 100% 100%;
+}
+
+.notice {
+	color: #00478a;
+}
+
+div.center {
+	margin: 30px auto;
+	text-align: center;
+	font-size: 40px;
+	font-family: "PT Sans Narrow", sans-serif;
+}
+
+div.center.small-margin {
+	margin: 10px auto;
+}
+
+div.center span.dark {
+	color: #00478a;
+}
+
+div.center small {
+	font-size: 14px;
+}
+
+div.center a {
+	color: #757575 !important;
+	text-decoration: none;
+}
+
+div.center a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 34px;
+	line-height: 34px;
+}
+
+h2 {
+	font-size: 28px;
+	line-height: 28px;
+}
+
+h3 {
+	font-size: 23px;
+	line-height: 23px;
+}
+
+#cecutientPanel {margin: 0 auto;}
+
+#layout {
+	position: relative;
+	width: 980px;
+	margin: 0 auto;
+}
+#layout article {
+	padding: 20px;
+	background: white;
+}
+
+#github-link {
+	position: fixed; top: 0; left: 0; border: 0; z-index: 5;
+}
+
+img{max-width: 100%;}
+
+@media (max-width: 979px) {
+	#layout {
+		width: 80%;
+		padding-top: 130px;
+	}
+
+	body.cecutient .show-settings {
+		display: block;
+	}
+
+	#cecutientPanel {
+		/* Collapsed */
+		z-index: 999!important;
+		padding: 0 !important;
+		width: 0 !important;
+		height: auto;
+		overflow: hidden !important;
+		position: fixed !important;
+		top: 130px !important;
+		left: 0 !important;
+		border-radius: 0 !important;
+		transition: width 0.3s ease;
+		overflow-y: auto;
+	}
+
+	#panelWrapper:target #cecutientPanel {
+		width: 165px !important;
+		height: 320px !important;
+		padding: 10px !important;
+	}
+
+	#panelWrapper:target ~ .show-settings {
+		display: none;
+	}
+
+	#panelWrapper:target ~ .hide-settings {
+		display: block;
+	}
+
+	#cecutientPanel > div {
+		display: block !important;
+		float: none !important;
+		margin-left: 0 !important;
+		margin-bottom: 20px !important;
+		overflow: hidden;
+	}
+}
+
+@media (max-width: 720px) {
+	#cecutient, .show-settings, .hide-settings {
+		position: absolute !important;
+		right: 0!important;
+	}
+
+	#layout {
+		padding-top: 70px;
+	}
+
+	body.cecutient #layout {
+		padding-top: 130px;
+	}
+
+	#github-link {
+		position: absolute;
+	}
+}

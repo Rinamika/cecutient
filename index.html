@@ -6,41 +6,23 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>Cecutient Panel Example</title>
-
-	<style>
-		body{background: rgba(185, 228, 245, 1);}
-
-		#cecutientPanel {margin: 0 auto;}
-
-		#layout {
-			position: relative;
-			width: 980px;
-			margin: 0 auto;
-		}
-		#layout article {
-			padding: 20px;
-			border: 1px solid black;
-			background: white;
-		}
-
-		img{max-width: 100%;}
-	</style>
-
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="resources/jquery.cecutient.js"></script>
+	<link rel="stylesheet" href="demo/animate.css"/>
+	<link rel="stylesheet" href="demo/demo.css"/>
 	<link rel="stylesheet" href="resources/jquery.cecutient.css"/>
-
-
 	<script type="text/javascript">
 		jQuery(function($) {
 			$('#cecutient').cecutient({
-				increment: 3,
+				increment: 1,
 				target: "#layout article",
 				imageClass: ".cecutientImagesOn",
-				minimumFontSize : 16,
-				maximumFontSize : 20,
+				minimumFontSize : 0,
+				maximumFontSize : 10,
 				skipForFont: ".skip",
 				container: "#panelWrapper",
+				containerPath: "resources/templates",
 				language: 'en'
 			});
 		});
@@ -48,15 +30,25 @@
 </head>
 
 <body class="">
-
-	<div id="layout">
-	<a id="cecutient" href="#"></a>
-
+<a href="https://github.com/Rinamika/cecutient">
+	<img id="github-link" class="cecutientImagesOn"
+		 src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67"
+		 alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
+<div id="layout">
 	<div id="panelWrapper"></div>
 
-	<article>
-		<h1>H1 title</h1>
+	<a id="cecutient" href="#"></a>
+	<a class="show-settings" href="#panelWrapper" alt="Show Cecutient Panel" title="Show Cecutient Panel"></a>
+	<a class="hide-settings" href="#" alt="Hide Cecutient Panel" title="Hide Cecutient Panel"></a>
+
+	<div class="center hide-on-cecutient fadeInDown animated"><span class="dark">Cecutient</span> plugin <small><a href="http://rinamika.ru">by Rinamika</a></small></div>
+
+	<article class="fadeInUp animated">
+		<p class="notice"><strong>This is demo page, demonstrating features of plugin.<br/>
+			Image below will be always visible in cecutient mode, even if you press "Off" button, because of class "cecutientImagesOn".</strong></p>
+
 		<img src="img/image1.jpg" alt="" class="cecutientImagesOn"/>
+		<h1>H1 title</h1>
 		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
 			magnis dis parturient montes, nascetur ridiculus mus.</p>
 		<p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec,
@@ -79,18 +71,22 @@
 			felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
 			porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus
 			varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.
-			 Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel,
+			Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel,
 			luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.
 			Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat,
 			leo eget bibendum sodales, augue velit cursus nunc,</p>
+		<p class="notice"><strong>Image below is visible only in cecutient mode (use "hide-on-normal" class)</strong></p>
 		<img src="img/image4.jpg" alt="" class="hide-on-normal"/>
 
 		<div class="skip">
 			<p>
+				<strong class="notice">Paragraph below is skipped for font-size changes.</strong><br/>
 				Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus
 				viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
 			</p>
 		</div>
+
+		<div class="center small-margin"><a href="https://github.com/Rinamika/cecutient"><small>download</small></a></div>
 	</article>
 </div>
 </body>
