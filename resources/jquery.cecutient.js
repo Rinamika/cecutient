@@ -1,5 +1,11 @@
 (function ($) {
-	var savedIncrement = (getCookie('cecutient_font-size') === undefined || getCookie('cecutient_font-size') == '') ? 0 : getCookie('cecutient_font-size');
+	const COOKIE_BASENAME = 'cecutient';
+	const COOKIE_FONT_NAME = COOKIE_BASENAME + '_font-size';
+	const COOKIE_COLOR_NAME = COOKIE_BASENAME + '_color-scheme';
+	const COOKIE_IMAGES = COOKIE_BASENAME + 'cecutient_hide-images';
+
+
+	var savedIncrement = (getCookie(COOKIE_FONT_NAME) === undefined || getCookie(COOKIE_FONT_NAME) == '') ? 0 : getCookie(COOKIE_FONT_NAME);
 
 	function getCookie(name) {
 		var matches = document.cookie.match(new RegExp(
@@ -44,59 +50,64 @@
 
 	$.fn.zoomtext = function (options) {
 		options = options || {};
-		options.min = options.min || 12;
-		options.max = options.max || 26;
-		options.increment = options.increment || "+=1";
+		options.min = options.min || 0;
+		options.max = options.max || 10;
+		options.increment = options.increment || 0;
 		options.recovery = options.recovery || !1;
 		options.skip = options.skip || !1;
 		options.setCookie = options.setCookie || !1;
+		options.mode = options.mode || 0;
 
 		var $element = $(this);
 
-		$element = $("*", $element).not($(options.skip)).not($(options.skip + " *"));
+		$element = $("*", $element).not($(options.skip)).not($(options.skip + " *"))
+			.filter("p, ul, ol, h1, h2, h3, h4, table, blockquote");
 
-/*		if (options.setCookie) {
-			if (options.increment.indexOf("+=") != -1) {
-				savedIncrement = parseInt(savedIncrement) + parseInt(options.increment.substr(2, options.increment.length - 1));
-			} else if (options.increment.indexOf("-=") != -1) {
-				savedIncrement = parseInt(savedIncrement) - parseInt(options.increment.substr(2, options.increment.length - 1));
-			}
-			setCookie('cecutient_font-size', savedIncrement);
-		}*/
-		return $element.each(function() {
-			var currentFSize, newFSize;
+		var cookieValue = getCookie(COOKIE_FONT_NAME);
+		var newFSize = options.increment;
+		var temp = cookieValue ? parseInt(cookieValue) + parseInt(newFSize) : newFSize;
+		newFSize = temp;
+		if (temp < options.min) {
+			newFSize = 0;
+			deleteCookie(COOKIE_FONT_NAME);
+			options.increment = 0;
+		} else if (temp > options.max) {
+			newFSize = 0;
+			options.increment = 0;
+		}
 
+		$element.each(function () {
 			if (options.recovery) {
-				$(this).removeAttr('style');
+				$(this).css("fontSize", "").css("lineHeight", "");
 			} else {
-				currentFSize = newFSize =
-					$("<div/>", {
-						css: {
-							fontSize: $(this).css("fontSize")
-						}
-					}).css("fontSize", options.increment).css("fontSize");
-
-				if (parseFloat(currentFSize) > options.max) {
-					newFSize = options.max;
+				if (options.mode) {
+					$(this).css("fontSize", "+=" + newFSize);
+				} else {
+					$(this).css("fontSize", "+=" + options.increment);
 				}
-				if (parseFloat(currentFSize) < options.min) {
-					newFSize = options.min;
-				}
-				$(this).css({
-					fontSize: newFSize,
-					lineHeight: parseFloat(newFSize) + 'px'
-				})
 			}
 		});
+
+		if (options.setCookie) {
+			var savedIncrement = cookieValue ? cookieValue : 0;
+			var newIncrement = parseInt(savedIncrement) + parseInt(options.increment);
+			jQuery(".font-value").text(newIncrement);
+			setCookie(COOKIE_FONT_NAME, newIncrement);
+		} else {
+			var savedIncrement = cookieValue ? cookieValue : options.increment;
+			jQuery(".font-value").text(savedIncrement);
+		}
+
+		return true;
 	};
 
 	$.fn.cecutient = function (options) {
 		options = options || {};
 		options.target = options.target || '#layout';
 		options.imageClass = options.imageClass || '.cecutientImagesOn';
-		options.minimumFontSize = options.minimumFontSize || 12;
-		options.maximumFontSize = options.maximumFontSize || 26;
-		options.increment = options.increment || 3;
+		options.minimumFontSize = options.minimumFontSize || 0;
+		options.maximumFontSize = options.maximumFontSize || 10;
+		options.increment = options.increment || +1;
 		options.skipForFont = options.skipForFont || '.skipForFont';
 		options.container = options.container || "#panelWrapper";
 		options.containerPath = options.containerPath || "resources/templates";
@@ -107,52 +118,47 @@
 
 		function cecutientOn() {
 			console.log("Cecutient mode on");
-			setCookie('cecutient', 1);
+			setCookie(COOKIE_BASENAME, 1);
 			$('body').addClass('cecutient');
 			$("#cecutientPanel").removeClass("hidden");
-			if (getCookie('cecutient_hide-images') == 1) {
+			if (getCookie(COOKIE_IMAGES) == 1) {
 				cecutientImagesOff();
 			} else {
 				cecutientImagesOn();
 			}
-			if (getCookie('cecutient_color-scheme') !== undefined) {
-				setColorScheme(getCookie('color-scheme'));
+			if (getCookie(COOKIE_COLOR_NAME) !== undefined) {
+				setColorScheme(getCookie(COOKIE_COLOR_NAME));
 			}
-			if (getCookie('cecutient_font-size') !== undefined && getCookie('cecutient_font-size') !== '') {
+			if (getCookie(COOKIE_FONT_NAME) !== undefined && getCookie(COOKIE_FONT_NAME) !== '') {
 				$(options.target+ ":not('" + options.skipForFont + "')").zoomtext({
-					increment: "+=" + getCookie('cecutient_font-size'),
+					increment: 0,
+					setCookie: 0,
+					mode: 1,
 					min: options.minimumFontSize,
 					max: options.maximumFontSize,
-					skip: options.skipForFont});
-			} else {
-				$(options.target).zoomtext({
-					increment: "+=0",
-					min: options.minimumFontSize,
-					max: options.maximumFontSize,
-					setCookie: 1,
 					skip: options.skipForFont});
 			}
 		}
 
 		function cecutientOff() {
 			console.log("Cecutient mode off");
-			deleteCookie('cecutient');
+			deleteCookie(COOKIE_BASENAME);
 			$("#cecutientPanel").addClass("hidden");
 			body.removeClass('cecutient colorWhite colorBlack colorBlue');
 			$('img').removeClass('hidden');
 			body.zoomtext({recovery: 1});
-			deleteCookie('cecutient_font-size');
+			deleteCookie(COOKIE_FONT_NAME);
 		}
 
 		function cecutientImagesOn() {
-			deleteCookie('cecutient_hide-images');
+			deleteCookie(COOKIE_IMAGES);
 			$('#switchOnImages').addClass('current');
 			$('#switchOffImages').removeClass('current');
 			$('img').removeClass('hidden');
 		}
 
 		function cecutientImagesOff() {
-			setCookie('cecutient_hide-images', 1);
+			setCookie(COOKIE_IMAGES, 1);
 			$('#switchOnImages').removeClass('current');
 			$('#switchOffImages').addClass('current');
 			$('img:not(' + options.imageClass + ')').addClass('hidden');
@@ -160,11 +166,11 @@
 
 		function setColorScheme(color) {
 			body.removeClass("colorWhite colorBlack colorBlue").addClass(color);
-			setCookie('cecutient_color-scheme', color);
+			setCookie(COOKIE_COLOR_NAME, color);
 		}
 
 		context.unbind("click").bind("click", function () {
-			getCookie('cecutient') == 1 ? cecutientOff() : cecutientOn();
+			getCookie(COOKIE_BASENAME) == 1 ? cecutientOff() : cecutientOn();
 		});
 
 		$("#normal-mode").unbind("click").bind("click", function () {
@@ -187,16 +193,16 @@
 			});
 
 			$('#reduceFontSize').unbind("click").bind("click", function () {
-				$(options.target).zoomtext({increment: "-=" + options.increment, setCookie: 1, skip: options.skipForFont, min: options.minimumFontSize});
+				$(options.target).zoomtext({increment: -1, setCookie: 1, skip: options.skipForFont, min: options.minimumFontSize});
 			});
 
 			$('#increaseFontSize').unbind("click").bind("click", function () {
-				$(options.target).zoomtext({increment: "+=" + options.increment, setCookie: 1, skip: options.skipForFont, max: options.maximumFontSize});
+				$(options.target).zoomtext({increment: +1, setCookie: 1, skip: options.skipForFont, max: options.maximumFontSize});
 			});
 		});
 
 		//check if cecutient version is enabled in cookie
-		if (getCookie('cecutient') == 1) {
+		if (getCookie(COOKIE_BASENAME) == 1) {
 			cecutientOn();
 		}
 	}
